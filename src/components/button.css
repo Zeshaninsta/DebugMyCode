@@ -1,0 +1,43 @@
+.btn{
+    border: none;
+    border: 2px solid white;
+    padding: 10px;
+    color: white;
+    position: relative;
+    cursor: pointer;
+}
+
+.btn:not(:hover):before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    transition: .5s cubic-bezier(0.39, 0.575, 0.565, 1);
+    z-index: -1;
+}
+
+.btn:hover::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    transition: .5s cubic-bezier(0.39, 0.575, 0.565, 1);
+    color: #191919;
+    z-index: -1;
+}
+
+.btn:hover{
+    color: #191919;
+    z-index: 1;
+}
+.btn:not(:hover){
+    color: #fff;
+    z-index: 1;
+}
