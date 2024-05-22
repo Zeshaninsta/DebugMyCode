@@ -1,58 +1,94 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link component
+import { Link } from "react-router-dom";
 import { db } from "../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
-// import Sorry from './Sorry';
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
 const ShowPosts = () => {
-  const [Posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "userposts"));
-        const PostsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(PostsData);
-      } catch (error) {
-        console.error("Error fetching Posts:", error);
-      }
-    };
+    // Create a query to fetch posts from the "userposts" collection ordered by "createdAt" in descending order
+    const postsQuery = query(
+      collection(db, "userposts"),
+      orderBy("createdAt", "desc")
+    );
 
-    fetchPosts();
+    // Listen for real-time updates
+    const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
+      const postsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPosts(postsData);
+    });
+
+    // Clean up the listener on component unmount
+    return () => unsubscribe();
   }, []);
 
+  const formatDate = (timestamp) => {
+    if (!timestamp) return "Unknown date";
+    const date = timestamp.toDate();
+    const options = { year: "numeric", month: "short", day: "2-digit" };
+    const formattedDate = date
+      .toLocaleDateString("en-US", options)
+      .replace(",", "")
+      .replace(/ /g, "-");
+    const formattedTime = date
+      .toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+      .toUpperCase();
+    return `${formattedDate}, ${formattedTime}`;
+  };
+
   return (
-    <div className="w-full lg:w-[60%] m-auto h-full min-h-screen">
-      {Posts.length > 0 ? (
-        <div className="container mx-auto px-4 py-8 text-white">
-          <h2 className="text-3xl font-bold mb-8">Posts</h2>
-          <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-            {Posts.map((Posts) => (
-              <Link to={`/Posts/${Posts.id}`} key={Posts.id}>
-                <div className="bg-gray-600 rounded-lg overflow-hidden shadow-lg cursor-pointer h-[300px]">
-                  <p dangerouslySetInnerHTML={{ __html: Posts.owner }} />
-                  <img
-                    src={Posts.PostsImage}
-                    alt="Posts"
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="px-6 py-4 text-xl font-bold text-center">
-                    <div
-                      dangerouslySetInnerHTML={{ __html: Posts.PostsName }}
-                    />
-                  </div>
-                </div>
-              </Link>
-            ))}
+    <div className="w-full m-auto h-full min-h-screen">
+      <div className="w-[50%] m-auto flex flex-col justify-center items-center border-s border-e border-white">
+        {posts.length > 0 ? (
+          <div className="flex flex-col justify-start items-start text-white p-5 w-full">
+            <h2 className="text-3xl font-bold mb-8">Top Questions</h2>
+            <div className="flex flex-col w-full">
+              {posts.map((post) => {
+                const createdAt = formatDate(post.createdAt);
+
+                return (
+                  <Link to={`/Posts/${post.id}`} key={post.id}>
+                    <div className="border border-slate-700 shadow-lg cursor-pointer p-5 w-full m-2">
+                      <div className="flex items-center mb-4">
+                        {post.ownerProfileImage ? (
+                          <img
+                            src={post.ownerProfileImage}
+                            alt={post.ownerName}
+                            className="w-10 h-10 rounded-full mr-4"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-500 mr-4" />
+                        )}
+                        <p className="text-white text-sm font-rubik font-light border-b border-yellow-600">
+                          {post.PostsOwner || "Unknown User"}
+                        </p>
+                      </div>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: post.PostsName }}
+                      />
+                      <span className="text-sm text-gray-500 font-light font-rubik ">
+                        {createdAt}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ) : (
-        // <Sorry />
-        <h1>"sorry there is not post found"</h1>
-      )}
+        ) : (
+          <h1 className="text-white text-md">
+            Sorry, there are no posts found.
+          </h1>
+        )}
+      </div>
     </div>
   );
 };

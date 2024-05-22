@@ -39,5 +39,6 @@
 }
 .btn:not(:hover){
     color: #fff;
+    /* transition-delay: .4s; */
     z-index: 1;
 }
