@@ -1,52 +1,247 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import "react-quill/dist/quill.snow.css"; // Import the full Quill CSS
+import { useAuth } from "../contexts/AuthContext";
 
 const SinglePosts = () => {
-  const { id } = useParams(); // Extract the id parameter from the URL
-  const [Posts, setPosts] = useState(null); // Initialize Posts state
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [sidebarPosts, setSidebarPosts] = useState([]);
+  const [answer, setAnswer] = useState("");
+  const [answers, setAnswers] = useState([]);
+  const [currentUserData, setCurrentUserData] = useState(null); // State to hold current user's data
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, [currentUser, navigate]);
+
+  useEffect(() => {
+    const fetchPost = async () => {
       try {
         const docRef = doc(db, "userposts", id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setPosts(docSnap.data());
+          const postData = docSnap.data();
+          setPost(postData);
+          if (postData.answers) {
+            setAnswers(postData.answers);
+          }
         } else {
           console.log("No such document!");
         }
       } catch (error) {
-        console.error("Error fetching Posts:", error);
+        console.error("Error fetching post:", error);
       }
     };
 
-    fetchPosts();
-  }, [id]); // Fetch Posts data when the id parameter changes
+    fetchPost();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchSidebarPosts = async () => {
+      try {
+        const postsQuery = query(
+          collection(db, "userposts"),
+          orderBy("createdAt", "desc"),
+          limit(5)
+        );
+        const postsSnapshot = await getDocs(postsQuery);
+        const postsData = postsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const filteredPosts = postsData.filter((post) => post.id !== id);
+        setSidebarPosts(filteredPosts);
+      } catch (error) {
+        console.error("Error fetching sidebar posts:", error);
+      }
+    };
+
+    fetchSidebarPosts();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        if (currentUser) {
+          const userDocRef = doc(db, "userdb", currentUser.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            setCurrentUserData(userData);
+          } else {
+            console.log("No such user document!");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching current user data:", error);
+      }
+    };
+
+    fetchCurrentUser();
+  }, [currentUser]);
+
+  const handleBack = () => {
+    window.history.back();
+  };
+
+  const handleAnswerSubmit = async () => {
+    try {
+      if (answer.trim() !== "") {
+        const postRef = doc(db, "userposts", id);
+        const newAnswer = {
+          answerText: answer,
+          answeredAt: new Date(),
+          userId: currentUser.uid,
+          userName: currentUserData?.Name || "Unknown User", // Use current user's name from fetched data
+          userProfile: currentUserData?.profileImage || "", // Use current user's profile image from fetched data
+        };
+
+        // Fetch the existing answers from Firestore
+        const postSnap = await getDoc(postRef);
+        if (postSnap.exists()) {
+          const postData = postSnap.data();
+          const currentAnswers = postData.answers || [];
+
+          // Append the new answer to the existing answers
+          const updatedAnswers = [...currentAnswers, newAnswer];
+
+          // Update the post document with the updated answers array
+          await setDoc(postRef, { answers: updatedAnswers }, { merge: true });
+
+          // Update the answers state with the updated answers
+          setAnswers(updatedAnswers);
+
+          // Clear the answer input field
+          setAnswer("");
+        }
+      }
+    } catch (error) {
+      console.error("Error submitting answer:", error);
+    }
+  };
 
   return (
-    <div className="p-5 text-white w-full m-auto lg:w-[50%] min-h-screen flex flex-col justify-center items-center">
-      {Posts ? (
-        <div>
-          <div className="p-2 w-full flex justify-start items-start gap-2 capitalize">
-            <p>Owner: </p>
-            <p dangerouslySetInnerHTML={{ __html: Posts.PostsOwner }} />
-          </div>
-          <div
-            className="mb-5 text-sm font-rubik font-bold p-2 text-start w-full"
-            dangerouslySetInnerHTML={{ __html: Posts.PostsName }}
-          />
-          <div className="w-full h-[2px] bg-gradient-to-t from-transparent via-slate-700 mt-5 mb-5 to-transparent"></div>
-          <div
-            className="ql-editor text-white p-5 overflow-scroll" // Added ql-editor class
-            dangerouslySetInnerHTML={{ __html: Posts.PostsDescription }}
-          />
+    <div className="w-full min-h-screen">
+      <button
+        onClick={handleBack}
+        className="w-[70%] mx-auto mb-2 flex justify-start items-start border-b border-slate-700 text-md font-rubik font-semibold text-gray-300 hover:text-white duration-200"
+      >
+        Back
+      </button>
+      <div className="flex justify-normal items-start mt-10 w-[70%] mx-auto relative ">
+        {/* Sidebar */}
+        <div className="flex flex-col justify-start p-5 items-start w-[30%] m-auto min-h-screen border-r bg-[#07161d] border-white">
+          <h2 className="text-white text-lg font-semibold mb-4">
+            Latest Posts
+          </h2>
+          <ul className="text-white w-full  ">
+            {sidebarPosts.map((post) => (
+              <li
+                key={post.id}
+                className="mb-2 group hover:bg-[#0a202c] w-full flex flex-col justify-start items-start p-2 rounded-md cursor-pointer"
+              >
+                <div
+                  className="flex justify-start items-start"
+                  onClick={() => navigate(`/posts/${post.id}`)}
+                >
+                  <span className="text-red-500 m-2 group-[text]: group-hover:text-green-500">
+                    {"[-]"}
+                  </span>
+                  {post.PostsName}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-      ) : (
-        <h1 className="text-white">Loading...</h1>
-      )}
+        {/* Left contents */}
+        <div className="p-5 text-white w-full m-auto flex flex-col justify-start items-start  min-h-screen border-r border-white">
+          {post ? (
+            <div className="w-full flex flex-col">
+              <div className="flex items-center mb-2 ">
+                {post.ownerProfileImage ? (
+                  <img
+                    src={post.ownerProfileImage}
+                    alt={post.ownerName}
+                    className="w-6 h-6 rounded-full mr-4"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-gray-500" />
+                )}
+                <p className="text-white text-sm font-rubik font-light border-b border-yellow-600">
+                  {post.PostsOwner || "Unknown User"}
+                </p>
+              </div>
+              <div
+                className="mb-5 text-sm font-rubik font-bold p-2 text-start w-full"
+                dangerouslySetInnerHTML={{ __html: post.PostsName }}
+              />
+              <div className="w-full h-[2px] bg-gradient-to-t from-transparent via-slate-700 mt-5 mb-5 to-transparent"></div>
+              <div
+                className="ql-editor text-white p-5 overflow-scroll"
+                dangerouslySetInnerHTML={{ __html: post.PostsDescription }}
+              />
+              <div className="mt-8">
+                <h1 className="text-lg text-white mb-4">Answers</h1>
+                <ul>
+                  {answers.map((ans, index) => (
+                    <li key={index} className="text-white">
+                      <div className="flex flex-col justify-start items-start gap-2 m-2">
+                        <div className=" object-cover rounded-full text-sm flex gap-2 justify-center items-center">
+                          <img
+                            src={ans.userProfile}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                          <p className="border-b border-yellow-600">
+                            {ans.userName}
+                          </p>
+                        </div>
+                        <p className="bg-[#0a202c] w-full p-2 text-sm rounded-md">
+                          {ans.answerText}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-8">
+                <h1 className="text-lg text-white mb-4">Your Answer</h1>
+                <textarea
+                  value={answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  className="w-full h-24 p-3 border border-gray-300 rounded-md text-white bg-[#0a202c] resize-none focus:outline-none"
+                  placeholder="Type your answer here..."
+                ></textarea>
+                <button
+                  onClick={handleAnswerSubmit}
+                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                >
+                  Submit Answer
+                </button>
+              </div>
+            </div>
+          ) : (
+            <h1 className="text-white">Loading...</h1>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

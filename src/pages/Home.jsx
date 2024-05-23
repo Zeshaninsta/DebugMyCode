@@ -1,6 +1,7 @@
 import React from "react";
 import MyButton from "../components/Button";
 import ShowPosts from "./showPost";
+import CreatePost from "../pages/CreatePost";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
         <div className="w-[80%] h-[2px] bg-gradient-to-r from-transparent via-slate-700 m-5 to-transparent"></div>
         <MyButton text={"Get started"} />
       </div>
+      <CreatePost />
       <ShowPosts />
     </div>
   );

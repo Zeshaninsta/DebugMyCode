@@ -72,7 +72,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full lg:w-[60%] m-auto text-white p-5 min-h-screen flex flex-col">
+    <div className="w-full lg:w-[60%] m-auto text-white p-5 flex flex-col">
       <div className="w-full flex flex-col justify-center items-center p-2 border border-slate-800">
         <h2 className="text-2xl font-bold mb-4">What on Your Mind?</h2>
         <code className="text-sm text-white">Ask a Question</code>

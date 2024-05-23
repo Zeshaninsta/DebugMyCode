@@ -54,6 +54,7 @@ const Login = () => {
       setPassword("");
       setError("");
       setSuccessMessage("Login successful!");
+      Navigation("/");
     } catch (error) {
       setError(error.message);
       setSuccessMessage("");

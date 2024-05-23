@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavProfile from "../User/NavProfile";
+import { useAuth } from "../contexts/AuthContext";
 
 const Nav = () => {
-  const [User, setUser] = useState(false);
+  const { currentUser } = useAuth();
 
-  //   const toggle = () => {
-  //     setUser(!User);
-  //   };
   return (
     <div className="w-full z-30">
-      <nav className=" w-full px-16 py-4 flex justify-between items-center  bg-[#06131a] z-20">
+      <nav className="w-full px-16 py-4 flex justify-between items-center bg-[#06131a] z-20">
         <Link to="/">
           <h1 className="font-rubik font-bold text-sm text-white p-2 border border-slate-700 rounded-md cursor-pointer hover:bg-white hover:text-[#06131a] duration-500">
             {"<"} DebugMyCode {"/>"}
@@ -38,7 +36,9 @@ const Nav = () => {
           </li>
         </ul>
 
-        {!User ? (
+        {currentUser ? (
+          <NavProfile />
+        ) : (
           <div className="flex justify-evenly items-center gap-2 text-white">
             <Link to="/login">
               <button className="w-[120px] border border-slate-700 p-2 text-sm">
@@ -51,8 +51,6 @@ const Nav = () => {
               </button>
             </Link>
           </div>
-        ) : (
-          <NavProfile />
         )}
       </nav>
     </div>
