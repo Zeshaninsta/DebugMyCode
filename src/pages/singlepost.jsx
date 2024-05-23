@@ -165,7 +165,7 @@ const SinglePosts = () => {
                   onClick={() => navigate(`/posts/${post.id}`)}
                 >
                   <span className="text-red-500 m-2 group-[text]: group-hover:text-green-500">
-                    {"[-]"}
+                    {"[+]"}
                   </span>
                   {post.PostsName}
                 </div>
