@@ -152,14 +152,16 @@ const SinglePosts = () => {
           <h2 className="text-white text-lg font-semibold mb-4">
             Latest Posts
           </h2>
-          <ul className="text-white w-full  ">
+          <ul className="text-white w-full relative overflow-hidden">
+            <div className="w-[10px] h-[500px] absolute left-0 bg-[#03090c] top-0 rounded-full"></div>
             {sidebarPosts.map((post) => (
               <li
                 key={post.id}
-                className="mb-2 group hover:bg-[#0a202c] w-full flex flex-col justify-start items-start p-2 rounded-md cursor-pointer"
+                className="mb-2 group hover:bg-[#0a202c] w-full flex flex-col justify-center items-start p-2 rounded-md cursor-pointer"
               >
+                <span className="w-[10px] h-[10px] bg-slate-700 rounded-full absolute left-0 group-hover:bg-green-500"></span>
                 <div
-                  className="flex justify-start items-start"
+                  className="flex justify-center items-center  truncate"
                   onClick={() => navigate(`/posts/${post.id}`)}
                 >
                   <span className="text-red-500 m-2 group-[text]: group-hover:text-green-500">
