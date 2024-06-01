@@ -84,7 +84,7 @@ const CreatePost = () => {
         <code className="text-sm text-white">Ask a Question</code>
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 flex flex-col justify-center items-center w-[60%] m-auto"
+          className="space-y-4 flex flex-col justify-center items-center w-full lg:w-[60%] m-auto"
         >
           <div className="w-full flex flex-col gap-2">
             <label className="block mb-1 text-sm font-rubik">Title:</label>
@@ -115,7 +115,7 @@ const CreatePost = () => {
               onChange={() => {}} // Readonly input for displaying tags
               className="w-full outline-none  text-sm text-white bg-transparent p-2"
             />
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex text-xs lg:text-sm flex-wrap gap-2 mt-2">
               {[
                 "javascript",
                 "react",

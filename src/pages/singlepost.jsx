@@ -139,16 +139,16 @@ const SinglePosts = () => {
   };
 
   return (
-    <div className="w-full min-h-screen z-10">
+    <div className="w-full min-h-screen z-10 ">
       <button
         onClick={handleBack}
-        className="w-[70%] mx-auto mb-2 flex justify-start items-start border-b border-slate-700 text-md font-rubik font-semibold text-gray-300 hover:text-white duration-200"
+        className="px-2 w-full lg:w-[70%] mx-auto mb-2 flex justify-start items-start border-b border-slate-700 text-md font-rubik font-semibold text-gray-300 hover:text-white duration-200"
       >
         Back
       </button>
-      <div className="flex justify-normal items-start mt-10 w-[70%] mx-auto relative z-10">
+      <div className="flex justify-normal items-start mt-10 w-full lg:w-[70%] mx-auto relative z-10">
         {/* Sidebar */}
-        <div className="flex flex-col justify-start p-5 items-start w-[30%] m-auto min-h-screen border-r bg-[#07161d] border-white">
+        <div className="hidden lg:flex flex-col justify-start p-5 items-start lg:w-[30%] m-auto min-h-screen border-r bg-[#07161d] border-white">
           <h2 className="text-white text-lg font-semibold mb-4">
             Latest Posts
           </h2>
@@ -174,7 +174,7 @@ const SinglePosts = () => {
           </ul>
         </div>
         {/* Left contents */}
-        <div className="p-5 text-white w-full m-auto flex flex-col justify-start items-start  min-h-screen border-r border-white z-10">
+        <div className="p-5 w-full text-white m-auto flex flex-col justify-start items-start  min-h-screen border-r border-white z-10">
           {post ? (
             <div className="w-full flex flex-col">
               <div className="flex items-center mb-2 ">
@@ -242,7 +242,7 @@ const SinglePosts = () => {
                 ></textarea>
                 <button
                   onClick={handleAnswerSubmit}
-                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
+                  className="flex justify-center items-center mx-auto mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none"
                 >
                   Submit Answer
                 </button>

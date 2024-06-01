@@ -137,10 +137,10 @@ const Userprofile = () => {
   };
 
   return (
-    <div className="flex w-[60%] m-auto justify-start border border-slate-800 items-start min-h-screen">
+    <div className="flex w-full lg:w-[60%] m-auto justify-start border border-slate-800 items-start min-h-screen">
       {/* Side bar */}
       {showSidebar && (
-        <div className="w-1/5 text-white p-5 ">
+        <div className="hidden lg:black w-1/5 text-white p-5 ">
           <label
             htmlFor="profilePicture"
             className="cursor-pointer relative"
@@ -205,7 +205,7 @@ const Userprofile = () => {
         </div>
       )}
       {/* Main content */}
-      <div className="w-4/5  h-full">
+      <div className="w-full lg:w-4/5  h-full">
         {userData && (
           <React.Fragment>
             {activeComponent === "userinfo" && <UserInfo />}

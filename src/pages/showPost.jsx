@@ -84,8 +84,8 @@ const ShowPosts = () => {
 
   return (
     <div className="w-full m-auto h-full min-h-screen">
-      <div className="w-full lg:w-[60%] m-auto flex flex-col justify-center items-center">
-        <div className="w-[60%] mx-auto flex justify-center items-center gap-2 px-5 py-2 border border-slate-800 bg-slate-800 mt-5 text-white rounded-md">
+      <div className="w-full lg:w-[60%] m-auto flex flex-col justify-center items-center px-2">
+        <div className="w-full lg:w-[60%] mx-auto flex justify-center items-center gap-2 px-5 py-2 border border-slate-800 bg-slate-800 mt-5 text-white rounded-md">
           <input
             type="search"
             placeholder="Search posts..."
@@ -95,7 +95,7 @@ const ShowPosts = () => {
           />
           <FiSearch className="cursor-pointer text-md" />
         </div>
-        <div className="flex gap-2 mt-4 w-[60%] overflow-x-scroll bg-slate-800 m-auto p-2 text-white ">
+        <div className="flex gap-2 text-xs lg:sm mt-4 w-full lg:w-[60%] overflow-x-scroll bg-slate-800 m-auto p-2 text-white ">
           {[
             "javascript",
             "react",
@@ -121,7 +121,7 @@ const ShowPosts = () => {
         {currentPosts.length > 0 ? (
           <div className="flex flex-col justify-start items-start text-white p-5 w-full">
             <h2 className="text-3xl font-bold mb-8">Top Questions</h2>
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full ">
               <p className="bg-slate-800 w-full p-2 text-white">
                 <span className="text-green-500 p-2 cursor-pointer">
                   #{selectedTags.join(", ")}
@@ -132,7 +132,7 @@ const ShowPosts = () => {
 
                 return (
                   <Link to={`/posts/${post.id}`} key={post.id}>
-                    <div className="border border-slate-700 shadow-lg cursor-pointer p-5 w-full m-2">
+                    <div className="border border-slate-700 shadow-lg cursor-pointer p-2 w-full m-2">
                       <div className="flex items-center mb-2 ">
                         {post.ownerProfileImage ? (
                           <img
