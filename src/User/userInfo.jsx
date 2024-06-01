@@ -109,15 +109,15 @@ const UserInfo = () => {
             <div className="mt-5 flex items-center text-white w-full">
               {!editingBios ? (
                 <div className="flex flex-col justify-center items-center w-full">
-                  <div className="flex justify-center items-center bg-black gap-1 backdrop:blur- lg w-full rounded-full ">
-                    <p className="text-md  text-gray-400 font-rubik ">
+                  <div className="flex justify-center items-center bg-gray-400 gap-1 backdrop:blur- lg w-full rounded-full ">
+                    <p className="text-md  text-slate-900 font-rubik ">
                       {userData ? userData.bios : ""}
                     </p>
                     <button
                       onClick={() => setEditingBios(true)}
                       className="ml-2 text-blue-500"
                     >
-                      <AiOutlineEdit className="p-2 w-10 h-10 rounded-full bg-black text-white" />
+                      <AiOutlineEdit className="p-2 w-10 h-10 rounded-full text-white" />
                     </button>
                   </div>
                 </div>
