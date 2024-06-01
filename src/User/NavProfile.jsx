@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavProfile = () => {
   const [show, setShow] = useState(false);
@@ -86,10 +87,12 @@ const NavProfile = () => {
               </div>
               <div className="flex flex-col w-full justify-center items-center">
                 <ul className="flex flex-col justify-start items-start gap-5 w-full">
-                  <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
-                    <FiUser />
-                    Profile
-                  </li>
+                  <Link to="/userdashboard">
+                    <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
+                      <FiUser />
+                      Profile
+                    </li>
+                  </Link>
                   <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-slate-700 to-transparent mx-auto "></div>
                   <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
                     <FiHome />

@@ -37,7 +37,7 @@ class Editor extends Component {
 
   render() {
     return (
-      <div className="ql-editor">
+      <div className="ql-editor w-[80%] outline-none">
         <ReactQuill
           ref={(el) => {
             this.reactQuillRef = el;
@@ -47,7 +47,7 @@ class Editor extends Component {
           modules={this.modules}
           value={this.state.editorHtml}
           placeholder={this.props.placeholder}
-          className="outline-none border border-slate-700 text-white font-rubik focus:border-blue-500"
+          className=" outline-none border border-slate-700 text-white font-rubik focus:border-blue-500 resize-none w-full"
         />
       </div>
     );

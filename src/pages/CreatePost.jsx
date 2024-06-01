@@ -7,8 +7,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import Editor from "../Editor/Markdown"; // Import the Editor component
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const CreatePost = () => {
@@ -16,12 +15,13 @@ const CreatePost = () => {
   const [editorData, setEditorData] = useState("");
   const [PostsLink1, setPostsLink1] = useState("");
   const [PostsLink2, setPostsLink2] = useState("");
+  const [tags, setTags] = useState([]);
   const { currentUser } = useAuth();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!currentUser) {
-      navigate("/login"); // Redirect to login if not logged in
+      navigate("/login");
     }
   }, [currentUser, navigate]);
 
@@ -41,7 +41,6 @@ const CreatePost = () => {
         throw new Error("Please provide a Posts description.");
       }
 
-      // Fetch the current user's data from "userdb" collection
       const userDoc = await getDoc(doc(firestore, "userdb", currentUser.uid));
       if (!userDoc.exists()) {
         throw new Error("User does not exist in the userdb collection.");
@@ -57,6 +56,7 @@ const CreatePost = () => {
         PostsOwner: userData.Name,
         ownerProfileImage: userData.profileImage,
         createdAt: new Date(),
+        tags: tags, // Keep tags as an array
       };
 
       await addDoc(collection(firestore, "userposts"), PostsData);
@@ -66,19 +66,25 @@ const CreatePost = () => {
       setEditorData("");
       setPostsLink1("");
       setPostsLink2("");
+      setTags([]); // Clear tags after posting
     } catch (error) {
       console.error("Error uploading Posts data:", error);
     }
   };
 
+  // Function to handle adding tags
+  const handleAddTag = (tag) => {
+    setTags((prevTags) => [...prevTags, tag]);
+  };
+
   return (
     <div className="w-full lg:w-[60%] m-auto text-white p-5 flex flex-col">
       <div className="w-full flex flex-col justify-center items-center p-2 border border-slate-800">
-        <h2 className="text-2xl font-bold mb-4">What on Your Mind?</h2>
+        <h2 className="text-2xl font-bold mb-4">What's in Your Mind?</h2>
         <code className="text-sm text-white">Ask a Question</code>
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 flex flex-col justify-center items-center"
+          className="space-y-4 flex flex-col justify-center items-center w-[60%] m-auto"
         >
           <div className="w-full flex flex-col gap-2">
             <label className="block mb-1 text-sm font-rubik">Title:</label>
@@ -93,7 +99,43 @@ const CreatePost = () => {
             <label className="block mb-1 bg-transparent text-sm font-rubik">
               Question:
             </label>
-            <Editor value={editorData} onChange={setEditorData} />
+            <input
+              type="text"
+              value={editorData}
+              onChange={(e) => setEditorData(e.target.value)}
+              className="w-full outline-none border border-slate-700 focus:border-blue-400 text-sm text-white bg-transparent p-2"
+            />
+          </div>
+          <div className="w-full flex flex-col gap-2">
+            <label className="block mb-1 bg-transparent text-sm font-rubik">
+              Tags:
+            </label>
+            <input
+              value={tags.map((tag) => `#${tag}`).join(" ")}
+              onChange={() => {}} // Readonly input for displaying tags
+              className="w-full outline-none  text-sm text-white bg-transparent p-2"
+            />
+            <div className="flex flex-wrap gap-2 mt-2">
+              {[
+                "javascript",
+                "react",
+                "python",
+                "java",
+                "html",
+                "C++",
+                "C",
+                "Ruby",
+                "Nodejs",
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  className="tag-button bg-slate-900 px-5 py-2"
+                  onClick={() => handleAddTag(tag)}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
           </div>
           <button
             type="submit"

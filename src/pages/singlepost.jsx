@@ -139,14 +139,14 @@ const SinglePosts = () => {
   };
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen z-10">
       <button
         onClick={handleBack}
         className="w-[70%] mx-auto mb-2 flex justify-start items-start border-b border-slate-700 text-md font-rubik font-semibold text-gray-300 hover:text-white duration-200"
       >
         Back
       </button>
-      <div className="flex justify-normal items-start mt-10 w-[70%] mx-auto relative ">
+      <div className="flex justify-normal items-start mt-10 w-[70%] mx-auto relative z-10">
         {/* Sidebar */}
         <div className="flex flex-col justify-start p-5 items-start w-[30%] m-auto min-h-screen border-r bg-[#07161d] border-white">
           <h2 className="text-white text-lg font-semibold mb-4">
@@ -174,7 +174,7 @@ const SinglePosts = () => {
           </ul>
         </div>
         {/* Left contents */}
-        <div className="p-5 text-white w-full m-auto flex flex-col justify-start items-start  min-h-screen border-r border-white">
+        <div className="p-5 text-white w-full m-auto flex flex-col justify-start items-start  min-h-screen border-r border-white z-10">
           {post ? (
             <div className="w-full flex flex-col">
               <div className="flex items-center mb-2 ">
@@ -190,14 +190,22 @@ const SinglePosts = () => {
                 <p className="text-white text-sm font-rubik font-light border-b border-yellow-600">
                   {post.PostsOwner || "Unknown User"}
                 </p>
+                {post.tags?.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-slate-800 px-2 py-1 text-xs font-rubik ml-2"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
               <div
-                className="mb-5 text-sm font-rubik font-bold p-2 text-start w-full"
+                className="mb-2 text-lg font-rubik font-bold p-2 text-start w-full"
                 dangerouslySetInnerHTML={{ __html: post.PostsName }}
               />
-              <div className="w-full h-[2px] bg-gradient-to-t from-transparent via-slate-700 mt-5 mb-5 to-transparent"></div>
+              <div className="w-full h-[2px] bg-gradient-to-t from-transparent via-slate-700 to-transparent"></div>
               <div
-                className="ql-editor text-white p-5 overflow-scroll"
+                className="ql-editor text-white p-5 overflow-scroll bg-slate-800"
                 dangerouslySetInnerHTML={{ __html: post.PostsDescription }}
               />
               <div className="mt-8">
@@ -223,6 +231,7 @@ const SinglePosts = () => {
                   ))}
                 </ul>
               </div>
+
               <div className="mt-8">
                 <h1 className="text-lg text-white mb-4">Your Answer</h1>
                 <textarea
