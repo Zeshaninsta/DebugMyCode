@@ -73,7 +73,7 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center border-l border-gray-300">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center">
       <div className="w-full flex flex-col justify-center items-center ">
         {userData && (
           <div
@@ -109,8 +109,8 @@ const UserInfo = () => {
             <div className="mt-5 flex items-center text-white w-full">
               {!editingBios ? (
                 <div className="flex flex-col justify-center items-center w-full">
-                  <div className="flex justify-center items-center bg-gray-400 gap-1 backdrop:blur- lg w-full rounded-full ">
-                    <p className="text-md  text-slate-900 font-rubik ">
+                  <div className="flex justify-center items-center bg-transparent gap-1 backdrop-blur-md border border-slate-700 lg w-full rounded-full ">
+                    <p className="text-md  text-gray-700 font-rubik ">
                       {userData ? userData.bios : ""}
                     </p>
                     <button

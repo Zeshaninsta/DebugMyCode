@@ -11,7 +11,7 @@ import { db } from "../firebase/firebase"; // Adjust the import path to your fir
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-
+import { FaArrowsRotate } from "react-icons/fa6";
 const MyPosts = () => {
   const { currentUser } = useAuth();
   const [posts, setPosts] = useState([]);
@@ -61,7 +61,14 @@ const MyPosts = () => {
   }, [currentUser]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-start mt-10 gap-2 text-2xl text-white min-h-screen">
+        <div className="flex justify-center items-center gap-2 ">
+          Loading
+          <FaArrowsRotate className="animate-spin text-white" />
+        </div>
+      </div>
+    );
   }
 
   const formatDate = (timestamp) => {
@@ -83,8 +90,8 @@ const MyPosts = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center p-4">
-      <h2 className="text-2xl font-semibold mb-4 text-white">My Posts</h2>
+    <div className="min-h-screen w-full lg:w-[50%] mx-auto flex flex-col items-center m-auto px-2 py-4 ">
+      <h2 className="text-2xl font-semibold mb-4 text-white">Your Posts</h2>
       {userName && (
         <div className="mb-4 p-4 border border-slate-700 shadow-lg w-full">
           <h3 className="text-xl font-semibold text-white">User Information</h3>
@@ -94,13 +101,15 @@ const MyPosts = () => {
         </div>
       )}
       {posts.length === 0 ? (
-        <p>No posts found.</p>
+        <p className="text-white text-center text-md font-rubik">
+          No posts found.
+        </p>
       ) : (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full justify-center items-center">
           {posts.map((post) => (
-            <Link to={`/posts/${post.id}`} key={post.id}>
-              <div className="border border-slate-700 shadow-lg cursor-pointer p-5 w-full m-2">
-                <div className="flex items-center mb-2">
+            <Link className="w-full" to={`/posts/${post.id}`} key={post.id}>
+              <div className="border border-slate-700 shadow-lg cursor-pointer px-2 py-4 w-full mt-2">
+                <div className="flex items-center mb-2 w-full ">
                   {post.ownerProfileImage ? (
                     <img
                       src={post.ownerProfileImage}
@@ -115,7 +124,7 @@ const MyPosts = () => {
                   </p>
                 </div>
                 <div
-                  className="text-xl font-rubik font-bold text-white"
+                  className="text-xl w-full  font-rubik font-bold text-white"
                   dangerouslySetInnerHTML={{ __html: post.PostsName }}
                 />
                 <span className="text-xs text-gray-500 font-light font-rubik ">

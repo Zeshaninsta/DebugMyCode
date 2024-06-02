@@ -15,6 +15,8 @@ import {
 } from "firebase/firestore";
 import "react-quill/dist/quill.snow.css"; // Import the full Quill CSS
 import { useAuth } from "../contexts/AuthContext";
+import { FaArrowsRotate } from "react-icons/fa6";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const SinglePosts = () => {
   const { id } = useParams();
@@ -142,8 +144,9 @@ const SinglePosts = () => {
     <div className="w-full min-h-screen z-10 ">
       <button
         onClick={handleBack}
-        className="px-2 w-full lg:w-[70%] mx-auto mb-2 flex justify-start items-start border-b border-slate-700 text-md font-rubik font-semibold text-gray-300 hover:text-white duration-200"
+        className="px-2 py-5 w-full lg:w-[70%] items-center gap-2 mx-auto mb-2 flex justify-start border-b border-slate-700 text-md font-rubik font-semibold text-gray-300 hover:text-white duration-200"
       >
+        <IoMdArrowRoundBack className="text-white" />
         Back
       </button>
       <div className="flex justify-normal items-start mt-10 w-full lg:w-[70%] mx-auto relative z-10">
@@ -249,7 +252,10 @@ const SinglePosts = () => {
               </div>
             </div>
           ) : (
-            <h1 className="text-white">Loading...</h1>
+            <div className="flex justify-center items-center gap-2 text-2xl text-white mx-auto">
+              Loading
+              <FaArrowsRotate className="animate-spin text-white" />
+            </div>
           )}
         </div>
       </div>

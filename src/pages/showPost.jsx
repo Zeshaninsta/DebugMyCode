@@ -95,7 +95,7 @@ const ShowPosts = () => {
           />
           <FiSearch className="cursor-pointer text-md" />
         </div>
-        <div className="flex gap-2 text-xs lg:sm mt-4 w-full lg:w-[60%] overflow-x-scroll bg-slate-800 m-auto p-2 text-white ">
+        <div className="flex gap-2 text-xs lg:sm mt-4 w-full lg:w-[60%] overflow-x-scroll bg-slate-700 m-auto p-2 text-white ">
           {[
             "javascript",
             "react",
@@ -111,7 +111,7 @@ const ShowPosts = () => {
               key={tag}
               className={`tag-button ${
                 selectedTags.includes(tag) ? "tag-button-selected" : ""
-              } bg-slate-900 px-5 py-2`}
+              } bg-slate-800 hover:bg-slate-900 duration-500 px-5 py-2`}
               onClick={() => toggleTag(tag)}
             >
               {tag}

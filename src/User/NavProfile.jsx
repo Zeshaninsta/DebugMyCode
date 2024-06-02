@@ -59,10 +59,12 @@ const NavProfile = () => {
   };
 
   return (
-    <div className="relative">
-      <div className="flex flex-col justify-center items-center">
+    <div className="relative w-full">
+      <div
+        className="flex w-full flex-col justify-center items-center"
+        // ref={profileRef}
+      >
         <div
-          // ref={profileRef}
           className="flex justify-center items-center cursor-pointer w-[50px] h-[50px] rounded-full border border-slate-600"
           onClick={toggle}
         >
@@ -77,7 +79,7 @@ const NavProfile = () => {
           )}
         </div>
         {show && (
-          <div className="z-20 p-5 flex flex-col justify-between items-center w-[200px] h-[400px] bg-transparent backdrop-blur-xl border border-slate-800 absolute top-20 -right-10">
+          <div className="z-20 p-5 flex flex-col justify-between items-center w-full lg:w-[200px] h-[400px] bg-transparent backdrop-blur-xl border border-slate-800 absolute top-20 lg:-right-10 right-50">
             <div className="w-full flex flex-col">
               <div className="w-full mb-5 text-center ">
                 <h1 className="text-white font-rubik text-sm">
@@ -94,15 +96,19 @@ const NavProfile = () => {
                     </li>
                   </Link>
                   <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-slate-700 to-transparent mx-auto "></div>
-                  <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
-                    <FiHome />
-                    Dashboard
-                  </li>
+                  <Link to="/userdashboard">
+                    <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
+                      <FiHome />
+                      Dashboard
+                    </li>
+                  </Link>
                   <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-slate-700 to-transparent mx-auto"></div>
-                  <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
-                    <FiSettings />
-                    Setting
-                  </li>
+                  <Link to="/userdashboard">
+                    <li className="w-full text-gray-700 hover:text-white duration-200 cursor-pointer flex items-center gap-2">
+                      <FiSettings />
+                      Setting
+                    </li>
+                  </Link>
                   <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-slate-700 to-transparent mx-auto"></div>
                 </ul>
               </div>

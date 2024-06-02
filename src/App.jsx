@@ -13,6 +13,7 @@ import "react-quill/dist/quill.snow.css";
 import ShowPosts from "./pages/showPost";
 import Question from "./pages/Question";
 import UserDashboard from "./User/userDashboard";
+import MyPosts from "./User/MyPosts";
 
 const App = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/posts/:id" element={<SinglePosts />} />
         <Route path="/question" element={<Question />} />
         <Route path="/userdashboard" element={<UserDashboard />} />
+        <Route path="/userposts" element={<MyPosts />} />
       </Routes>
     </div>
   );

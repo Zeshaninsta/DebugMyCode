@@ -175,7 +175,7 @@ const Settings = () => {
             <div className="text-green-500 mt-4">{successMessage}</div>
           )}
           <div>
-            <h1 className="text-black font-semibold text-xl mt-8 mb-2 text-center">
+            <h1 className="text-white font-semibold text-xl mt-8 mb-2 text-center">
               Delete Your Account
             </h1>
             <p className="text-gray-700 mb-4 text-center">

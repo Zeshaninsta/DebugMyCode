@@ -2,6 +2,7 @@ import React from "react";
 import MyButton from "../components/Button";
 import ShowPosts from "./showPost";
 import CreatePost from "../pages/CreatePost";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -19,10 +20,10 @@ const Home = () => {
           <span>Welcome to DebugMyCode</span>
         </p>
         <div className="w-[80%] h-[2px] bg-gradient-to-r from-transparent via-slate-700 m-5 to-transparent"></div>
-        <MyButton text={"Get started"} />
+        <Link to="/question">
+          <MyButton text={"Get started"} />
+        </Link>
       </div>
-      {/* <CreatePost />
-      <ShowPosts /> */}
     </div>
   );
 };

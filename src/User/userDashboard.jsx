@@ -1,69 +1,37 @@
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-import {
-  doc,
-  deleteDoc,
-  updateDoc,
-  setDoc,
-  getDoc,
-  onSnapshot,
-} from "firebase/firestore";
-import { deleteUser } from "firebase/auth";
 import UserImage from "./userImage";
 import Settings from "./Setting";
 import UserInfo from "./userInfo";
-import React, { useState, useEffect, useRef } from "react";
-import { uploadProfilePicture } from "./uploadProfilePicture";
-import { AiOutlineCamera, AiOutlineEdit, AiOutlineMenu } from "react-icons/ai"; // Import AiOutlineMenu
-import { useNavigate } from "react-router-dom";
-import defaultUserIcon from "../assets/profile-user.png";
 import MyPosts from "./MyPosts";
+import { AiOutlineCamera, AiOutlineMenu } from "react-icons/ai";
+import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
+import defaultUserIcon from "../assets/profile-user.png";
+import { uploadProfilePicture } from "./uploadProfilePicture";
 
 const Userprofile = () => {
-  const Navigation = useNavigate();
-  const {
-    currentUser,
-    updateProfile,
-    updateEmail,
-    updatePassword,
-    deleteAccount,
-    logout,
-  } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [userData, setUserData] = useState(null);
   const [activeComponent, setActiveComponent] = useState("userinfo");
-  const [selectedPatient, setSelectedPatient] = useState(null);
-  const userRef = doc(db, "userdb", currentUser.uid);
-  const fileInputRef = useRef(null); // Ref for file input element
-  const [newProfilePicture, setNewProfilePicture] = useState(null);
-  const [newBios, setNewBios] = useState("");
-  const [oldBios, setOldBios] = useState(""); // State to store user data
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [editingBios, setEditingBios] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(true); // State to manage sidebar visibility
+  const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
-  // Function to toggle sidebar visibility
-  const toggleSidebar = () => {
-    setShowSidebar(!showSidebar);
-  };
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
-    // Redirect to login page if no user is logged in
     if (!currentUser) {
-      // Navigation('/login');
+      navigate("/login");
     }
-  }, [currentUser, Navigation]);
+  }, [currentUser, navigate]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       doc(db, "userdb", currentUser.uid),
       (docSnapshot) => {
         if (docSnapshot.exists()) {
-          const userDataFromFirestore = docSnapshot.data();
-          setUserData(userDataFromFirestore);
-        } else {
-          // Handle if user document not found
+          setUserData(docSnapshot.data());
         }
       }
     );
@@ -71,37 +39,11 @@ const Userprofile = () => {
     return () => unsubscribe();
   }, [currentUser]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (currentUser) {
-        // Check if currentUser exists
-        try {
-          const userSnapshot = await getDoc(userRef);
-          if (userSnapshot.exists()) {
-            const userDataFromFirestore = userSnapshot.data();
-            setUserData(userDataFromFirestore);
-            setOldBios(userDataFromFirestore.bios || ""); // Set the bios value from database
-          } else {
-            navigate("/login"); // Corrected function name
-            setError("User document not found");
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          setError("Error fetching user data");
-        }
-      }
-    };
-
-    fetchUserData();
-  }, [currentUser, userRef, navigate]); // Added missing dependencies
-
   const handleImageClick = () => {
-    // Trigger file input when the image is clicked
     fileInputRef.current.click();
   };
 
   const handlePictureChange = async (e) => {
-    // Set the new profile picture when a file is selected
     setNewProfilePicture(e.target.files[0]);
     await handlePictureUpload(e.target.files[0]);
   };
@@ -110,20 +52,9 @@ const Userprofile = () => {
     try {
       await uploadProfilePicture(currentUser, file);
       setSuccessMessage("Profile picture updated successfully.");
-      setTimeout(() => setSuccessMessage(""), 2000); // Clear success message after 2 seconds
+      setTimeout(() => setSuccessMessage(""), 2000);
     } catch (error) {
       setError("Failed to update profile picture.");
-    }
-  };
-
-  const handleSaveBios = async () => {
-    try {
-      await setDoc(userRef, { bios: newBios }, { merge: true });
-      setSuccessMessage("Bios updated successfully.");
-      setEditingBios(false);
-      setTimeout(() => setSuccessMessage(""), 2000); // Clear success message after 2 seconds
-    } catch (error) {
-      setError("Failed to update bios.");
     }
   };
 
@@ -136,82 +67,100 @@ const Userprofile = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
+  const handleLinkClick = (component) => {
+    setActiveComponent(component);
+    setShowSidebar(false);
+  };
+
   return (
-    <div className="flex w-full lg:w-[60%] m-auto justify-start border border-slate-800 items-start min-h-screen">
-      {/* Side bar */}
-      {showSidebar && (
-        <div className="hidden lg:black w-1/5 text-white p-5 ">
-          <label
-            htmlFor="profilePicture"
-            className="cursor-pointer relative"
-            onClick={handleImageClick}
-          >
-            {userData && (
-              <div className="flex flex-col items-center">
-                {userData.profileImage && (
-                  <div className="relative">
-                    <img
-                      src={userData.profileImage}
-                      alt="Profile"
-                      className="w-32 h-32 object-cover rounded-full"
-                    />
-                    <input
-                      type="file"
-                      id="profilePicture"
-                      accept="image/*"
-                      onChange={handlePictureChange}
-                      ref={fileInputRef}
-                      className="hidden"
-                    />
-                    <div className="absolute bottom-5 right-5 bg-white rounded-full p-1">
-                      <AiOutlineCamera className="text-blue-500 w-6 h-6 cursor-pointer" />
-                    </div>
-                  </div>
-                )}
-                <h3 className="text-lg font-semibold">{userData.firstName}</h3>
-                <p className="text-sm italic text-gray-400">{userData.bios}</p>
-                <p className="text-sm text-gray-600 cursor-pointer">
-                  {userData.email}
-                </p>
-              </div>
-            )}
-          </label>
-          <div className="mt-5 flex flex-col gap-5 h-full">
-            <button
-              onClick={() => setActiveComponent("userinfo")}
-              className="border border-slate-700 cursor-pointer p-2 rounded-lg"
-            >
-              View Profile
-            </button>
-            <button
-              onClick={() => setActiveComponent("myposts")}
-              className="border border-slate-700 cursor-pointer p-2 rounded-lg"
-            >
-              My Posts
-            </button>
-            <button
-              onClick={() => setActiveComponent("settings")}
-              className="border border-slate-700 cursor-pointer p-2 rounded-lg"
-            >
-              Settings
-            </button>
-            <button
-              className="border border-slate-700 cursor-pointer p-2 rounded-lg"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      )}
-      {/* Main content */}
-      <div className="w-full lg:w-4/5  h-full">
+    <div className="flex w-full lg:w-[60%] m-auto justify-start border border-slate-800 items-start min-h-screen relative">
+      <button
+        className="lg:hidden p-2 text-xl absolute top-2 left-5 bg-black text-white rounded-full hover:text-black hover:bg-white duration-500 cursor-pointer"
+        onClick={toggleSidebar}
+      >
+        <AiOutlineMenu />
+      </button>
+      <div
+        className={`absolute lg:static z-30 top-0 left-0 w-4/5 lg:w-1/5 h-full bg-[#081a24] p-5 transition-transform transform ${
+          showSidebar ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
         {userData && (
-          <React.Fragment>
+          <div className="md:h-screen overflow-hidden">
+            <div className="flex flex-col items-center ">
+              {userData.profileImage ? (
+                <div className="relative">
+                  <img
+                    src={userData.profileImage}
+                    alt="Profile"
+                    className="w-32 h-32 object-cover rounded-full"
+                  />
+                  <input
+                    type="file"
+                    id="profilePicture"
+                    accept="image/*"
+                    onChange={handlePictureChange}
+                    ref={fileInputRef}
+                    className="hidden"
+                  />
+                  <div className="absolute bottom-5 right-5 bg-white rounded-full p-1">
+                    <AiOutlineCamera
+                      className="text-blue-500 w-6 h-6 cursor-pointer"
+                      onClick={handleImageClick}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={defaultUserIcon}
+                  alt="Default Profile"
+                  className="w-32 h-32 object-cover rounded-full"
+                />
+              )}
+              <h3 className="text-lg font-semibold">{userData.firstName}</h3>
+              <p className="text-sm italic text-gray-400">{userData.bios}</p>
+              <p className="text-sm text-gray-600">{userData.email}</p>
+            </div>
+            <div className="mt-5 flex flex-col gap-5 text-white">
+              <button
+                onClick={() => handleLinkClick("userinfo")}
+                className="border border-slate-700 p-2 rounded-lg"
+              >
+                View Profile
+              </button>
+              <button
+                onClick={() => handleLinkClick("myposts")}
+                className="border border-slate-700 p-2 rounded-lg"
+              >
+                My Posts
+              </button>
+              <button
+                onClick={() => handleLinkClick("settings")}
+                className="border border-slate-700 p-2 rounded-lg"
+              >
+                Settings
+              </button>
+              <button
+                className="border border-slate-700 p-2 rounded-lg"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="w-full lg:w-4/5 h-full">
+        {userData && (
+          <>
             {activeComponent === "userinfo" && <UserInfo />}
             {activeComponent === "settings" && <Settings />}
             {activeComponent === "myposts" && <MyPosts />}
-          </React.Fragment>
+          </>
         )}
       </div>
     </div>

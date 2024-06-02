@@ -9,6 +9,11 @@ import {
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { BsFillQuestionCircleFill } from "react-icons/bs";
+import { RiQuestionAnswerLine } from "react-icons/ri";
+import { PiChatCenteredTextFill } from "react-icons/pi";
+import { BsQuestionDiamondFill } from "react-icons/bs";
+import { AiFillTags } from "react-icons/ai";
 
 const CreatePost = () => {
   const [PostsName, setPostsName] = useState("");
@@ -80,14 +85,20 @@ const CreatePost = () => {
   return (
     <div className="w-full lg:w-[60%] m-auto text-white p-5 flex flex-col">
       <div className="w-full flex flex-col justify-center items-center p-2 border border-slate-800">
-        <h2 className="text-2xl font-bold mb-4">What's in Your Mind?</h2>
-        <code className="text-sm text-white">Ask a Question</code>
+        <h2 className="text-2xl font-bold mb-4 flex justify-center items-center gap-2 text-white cursor-pointer">
+          What's in Your Mind <BsFillQuestionCircleFill />
+        </h2>
+        <code className="text-sm text-white flex justify-center items-center gap-2 cursor-pointer">
+          Ask a Question <RiQuestionAnswerLine />{" "}
+        </code>
         <form
           onSubmit={handleSubmit}
           className="space-y-4 flex flex-col justify-center items-center w-full lg:w-[60%] m-auto"
         >
           <div className="w-full flex flex-col gap-2">
-            <label className="block mb-1 text-sm font-rubik">Title:</label>
+            <label className="mb-1 text-sm font-rubik flex justify-start items-center gap-1 text-white">
+              <PiChatCenteredTextFill /> Title:
+            </label>
             <input
               type="text"
               value={PostsName}
@@ -96,7 +107,8 @@ const CreatePost = () => {
             />
           </div>
           <div className="w-full flex flex-col gap-2">
-            <label className="block mb-1 bg-transparent text-sm font-rubik">
+            <label className="flex justify-start items-center gap-1 text-white mb-1 bg-transparent text-sm font-rubik">
+              <BsQuestionDiamondFill />
               Question:
             </label>
             <input
@@ -107,7 +119,9 @@ const CreatePost = () => {
             />
           </div>
           <div className="w-full flex flex-col gap-2">
-            <label className="block mb-1 bg-transparent text-sm font-rubik">
+            <label className="flex justify-start items-center gap-1 text-white mb-1 bg-transparent text-sm font-rubik">
+              {" "}
+              <AiFillTags />
               Tags:
             </label>
             <input
@@ -115,7 +129,7 @@ const CreatePost = () => {
               onChange={() => {}} // Readonly input for displaying tags
               className="w-full outline-none  text-sm text-white bg-transparent p-2"
             />
-            <div className="flex text-xs lg:text-sm flex-wrap gap-2 mt-2">
+            <div className="flex text-xs lg:text-sm cursor-pointer flex-wrap gap-2 mt-2">
               {[
                 "javascript",
                 "react",
@@ -129,7 +143,7 @@ const CreatePost = () => {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className="tag-button bg-slate-900 px-5 py-2"
+                  className="tag-button bg-slate-800 hover:bg-slate-900 duration-500 px-5 py-2"
                   onClick={() => handleAddTag(tag)}
                 >
                   #{tag}
