@@ -22,14 +22,14 @@ const HeroSection = () => {
         <div className="w-full md:w-[60%] bg-slate-800 rounded-lg shadow-lg">
           <div className="flex items-center justify-between bg-gray-900 rounded-t-lg p-2">
             <span className="text-sm text-gray-400">DebugMyCode.js</span>
-            <div className="flex space-x-1">
+            <div className="flex space-x-1 ">
               <button className="h-3 w-3 rounded-full bg-red-500 hover:bg-red-600"></button>
               <button className="h-3 w-3 rounded-full bg-yellow-500 hover:bg-yellow-600"></button>
               <button className="h-3 w-3 rounded-full bg-green-500 hover:bg-green-600"></button>
             </div>
           </div>
-          <pre className="overflow-x-auto p-4">
-            <code className="text-green-400">
+          <pre className="overflow-x-auto p-2 bg-[#02131b]">
+            <code className="text-green-400 text-sm md:text-md">
               class DebugMyCode {"{"}
               <br />
               <span className="text-yellow-300 pl-4">constructor</span>() {"{"}

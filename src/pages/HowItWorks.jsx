@@ -5,18 +5,18 @@ import FAQ from "./FAQ";
 
 const HowItWorks = () => {
   return (
-    <section className="bg-gray-900 w-full md:w-[80%] mx-auto text-white py-20 rounded-xl shadow-md border border-slate-700 cursor-pointer ">
+    <section className="bg-gray-900 w-full md:w-[80%] mx-auto text-white py-5 md:py-20 rounded-xl shadow-md border border-slate-700 cursor-pointer ">
       <div className="container mx-auto">
-        <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center">
+        <div className="max-w-6xl mx-auto px-4 leading-normal">
+          <h1 className="text-4xl md:text-6xl font-bold mb-5 md:mb-8 text-center">
             How It Works
           </h1>
-          <p className="text-lg md:text-xl mb-12 text-center">
+          <p className="text-lg md:text-xl md:mb-12 text-center">
             Discover how DebugMyCode simplifies the code debugging process and
             helps you find solutions quickly:
           </p>
           {/* Steps grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
             {/* Step 1 */}
             <div className="flex flex-col items-center justify-center bg-green-500 rounded-lg shadow-lg p-6 cursor-pointer hover:scale-105 duration-500">
               <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">

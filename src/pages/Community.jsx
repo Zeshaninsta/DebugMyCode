@@ -73,15 +73,15 @@ const Community = () => {
   return (
     <section className="mt-10 text-white md:p-5 w-full ">
       <div className="container mx-auto w-full">
-        <div className="w-full md:w-[80%] mx-auto md:px-4">
+        <div className="w-full  mx-auto md:px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center">
             Community
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative md:border-2 border-slate-600 md:p-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative md:border-2 border-slate-600 md:p-5 w-full">
             {communityPosts.map((post) => (
               <div
                 key={post.id}
-                className="bg-gray-800 p-6 rounded-lg shadow-lg hover:rotate-3 duration-500 cursor-pointer"
+                className="bg-gray-800 p-6 rounded-lg shadow-lg hover:rotate-3 duration-500 cursor-pointer w-full"
               >
                 <h2 className="text-2xl font-semibold mb-4">{post.title}</h2>
                 <p className="text-lg">{post.content}</p>
