@@ -8,7 +8,7 @@ const QA = () => {
     <section className="text-white w-full mt-5">
       <div className="mx-auto w-full">
         <div className="w-full md:w-[80%] mx-auto md:px-4 mt-10">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko uppercase">
             Ask and Get Answers
           </h1>
           <div className="w-full mx-auto bg-gray-900 backdrop-blur-sm p-5 rounded-xl border border-slate-600">
