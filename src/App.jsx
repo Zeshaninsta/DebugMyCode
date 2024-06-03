@@ -14,6 +14,7 @@ import ShowPosts from "./pages/showPost";
 import Question from "./pages/Question";
 import UserDashboard from "./User/userDashboard";
 import MyPosts from "./User/MyPosts";
+import Footer from "./pages/Footer";
 
 const App = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/userdashboard" element={<UserDashboard />} />
         <Route path="/userposts" element={<MyPosts />} />
       </Routes>
+      <Footer />
     </div>
   );
 };

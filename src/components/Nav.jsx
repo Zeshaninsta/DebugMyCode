@@ -53,12 +53,16 @@ const Nav = () => {
               Your Posts
             </li>
           </Link>
-          <Link to="/userdashboard">
-            <li className="flex justify-center items-center gap-2 cursor-pointer hover:text-[#06131a] hover:bg-white p-2 rounded-lg duration-500 list-none">
-              <RxDashboard />
-              Dashboard
-            </li>
-          </Link>
+          {currentUser ? (
+            <Link to="/userdashboard">
+              <li className="flex justify-center items-center gap-2 cursor-pointer hover:text-[#06131a] hover:bg-white p-2 rounded-lg duration-500 list-none">
+                <RxDashboard />
+                Dashboard
+              </li>
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
         <div className="hidden md:flex justify-evenly items-center gap-2 text-white">
           {currentUser ? (
@@ -66,12 +70,12 @@ const Nav = () => {
           ) : (
             <>
               <Link to="/login">
-                <button className="w-[120px] border border-slate-700 p-2 text-sm">
+                <button className="w-[120px] border border-slate-700 p-2 text-sm hover:bg-green-500 duration-500 hover:border-none">
                   Login
                 </button>
               </Link>
               <Link to="/signup">
-                <button className="w-[120px] border border-slate-700 p-2 text-sm">
+                <button className="w-[120px] border border-slate-700 p-2 text-sm hover:bg-blue-500 duration-500 hover:border-none">
                   Signup
                 </button>
               </Link>
@@ -128,7 +132,7 @@ const Nav = () => {
               </Link>
               <Link
                 to="/signup"
-                className="w-full flex text-center justify-center items-center"
+                className="w-full flex text-center justify-center items-center hover:bg-blue-500 duration-500"
                 onClick={toggleMobileMenu}
               >
                 <button className="w-full border border-slate-700 p-2 text-sm rounded-md">

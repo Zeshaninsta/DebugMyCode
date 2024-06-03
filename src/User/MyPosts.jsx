@@ -12,11 +12,18 @@ import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaArrowsRotate } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 const MyPosts = () => {
   const { currentUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const [userName, setUserName] = useState(null);
   const [loading, setLoading] = useState(true);
+  const Navigate = useNavigate();
+  useEffect(() => {
+    if (!currentUser) {
+      Navigate("/login");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchUserDataAndPosts = async () => {
