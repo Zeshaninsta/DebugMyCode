@@ -11,7 +11,7 @@ const Developers = () => {
           <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko">
             Meet Our Developers
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 border border-slate-700 p-2 md:p-4">
             {/* Developer 1 - Emran */}
             <div className="bg-[#06131a] backdrop-blur-sm rounded-lg shadow-lg p-8 border-2 border-transparent bg-gradient-to-br from-gray-800 to-slate-900 hover:scale-105 duration-500 cursor-pointer">
               <h2 className="text-2xl font-semibold mb-4 font-rubik border-b border-red-300">
