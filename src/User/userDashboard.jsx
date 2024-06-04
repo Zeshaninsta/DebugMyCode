@@ -81,7 +81,7 @@ const Userprofile = () => {
     <PageTransition>
       <div className="flex w-full lg:w-[60%] m-auto justify-start border border-slate-800 items-start min-h-screen relative">
         <button
-          className="lg:hidden p-2 text-xl absolute top-2 left-5 bg-black text-white rounded-full hover:text-black hover:bg-white duration-500 cursor-pointer"
+          className="z-50 lg:hidden p-2 text-xl absolute top-2 left-5 bg-black text-white rounded-full hover:text-black hover:bg-white duration-500 cursor-pointer"
           onClick={toggleSidebar}
         >
           <AiOutlineMenu />
