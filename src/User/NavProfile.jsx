@@ -65,7 +65,7 @@ const NavProfile = () => {
         // ref={profileRef}
       >
         <div
-          className="flex justify-center items-center cursor-pointer w-[50px] h-[50px] rounded-full border border-slate-600"
+          className="flex justify-center items-center cursor-pointer w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-full border border-slate-600"
           onClick={toggle}
         >
           {userData && userData.profileImage ? (
@@ -79,7 +79,7 @@ const NavProfile = () => {
           )}
         </div>
         {show && (
-          <div className="z-20 p-5 flex flex-col justify-between items-center w-full lg:w-[200px] h-[400px] bg-transparent backdrop-blur-xl border border-slate-800 absolute top-20 lg:-right-10 right-50">
+          <div className="z-20 p-5 flex flex-col justify-between items-center w-[300px] lg:w-[200px] h-[400px] bg-transparent backdrop-blur-xl border border-slate-800 absolute top-20 lg:-right-10 right-0 ">
             <div className="w-full flex flex-col">
               <div className="w-full mb-5 text-center ">
                 <h1 className="text-white font-rubik text-sm">
