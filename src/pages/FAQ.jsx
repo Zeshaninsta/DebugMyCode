@@ -11,7 +11,7 @@ const QA = () => {
             <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko uppercase">
               Ask and Get Answers
             </h1>
-            <div className="w-full mx-auto bg-gray-900 backdrop-blur-sm p-5 rounded-xl border border-slate-600">
+            <div className="w-full mx-auto bg-gray-900 backdrop-blur-sm p-5 rounded-xl border border-slate-600 overflow-hidden">
               {/* User 1 */}
               <FramerMotion>
                 <div className="w-full  flex flex-col md:flex-row items-start mb-8 rounded-md cursor-pointer hover:translate-x-2 duration-500">
