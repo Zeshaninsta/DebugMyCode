@@ -1,7 +1,5 @@
-// Community.jsx
-
 import React from "react";
-
+import FramerMotion from "./FramerMotion";
 const Community = () => {
   const communityPosts = [
     {
@@ -71,34 +69,38 @@ const Community = () => {
   ];
 
   return (
-    <section className="mt-10 text-white md:p-5 w-full ">
-      <div className="container mx-auto w-full">
-        <div className="w-full  mx-auto md:px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko uppercase">
-            Community
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative md:border-2 border-slate-600 md:p-5 w-full">
-            {communityPosts.map((post) => (
-              <div
-                key={post.id}
-                className="bg-gray-800 p-6 rounded-lg shadow-lg hover:rotate-3 duration-500 cursor-pointer w-full"
-              >
-                <h2 className="text-2xl font-semibold mb-4 font-teko">
-                  {post.title}
-                </h2>
-                <p className="text-sm md:lg font-jet">{post.content}</p>
-                <div className="mt-4 flex items-center justify-between text-sm">
-                  <p className="text-xs md:sm font-jet bg-gray-900 rounded-sm leading-normal p-2">
-                    Posted by {post.author} on {post.date}
-                  </p>
-                  {/* Add additional actions or metadata here */}
-                </div>
+    <FramerMotion>
+      <section className="mt-10 text-white md:p-5 w-full ">
+        <div className="container mx-auto w-full">
+          <div className="w-full  mx-auto md:px-4">
+            <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko uppercase">
+              Community
+            </h1>
+            <FramerMotion>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative md:border-2 border-slate-600 md:p-5 w-full">
+                {communityPosts.map((post) => (
+                  <div
+                    key={post.id}
+                    className="bg-gray-800 p-6 rounded-lg shadow-lg hover:rotate-3 duration-500 cursor-pointer w-full"
+                  >
+                    <h2 className="text-2xl font-semibold mb-4 font-teko">
+                      {post.title}
+                    </h2>
+                    <p className="text-sm md:lg font-jet">{post.content}</p>
+                    <div className="mt-4 flex items-center justify-between text-sm">
+                      <p className="text-xs md:sm font-jet bg-gray-900 rounded-sm leading-normal p-2">
+                        Posted by {post.author} on {post.date}
+                      </p>
+                      {/* Add additional actions or metadata here */}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </FramerMotion>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </FramerMotion>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
+import FramerMotion from "./FramerMotion";
 
 const testimonialsData = [
   {
@@ -81,40 +82,42 @@ const Testimonials = () => {
   const displayedTestimonials = getDisplayedTestimonials();
 
   return (
-    <section className=" text-white w-full">
-      <div className="mx-auto w-full md:w-[80%] mt-5">
-        <div className=" mx-auto p-5 border-2 border-slate-700">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko">
-            Testimonials
-          </h1>
-          <div className="bg-gray-900 p-5 rounded-xl overflow-hidden relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-transform duration-1000 ease-in-out">
-              {displayedTestimonials.map((testimonial) => (
-                <div key={testimonial.id} className="p-6 relative">
-                  <div className="w-24 h-24 bg-transparent border border-blue-500 absolute top-0 left-0 z-10"></div>
-                  <div className="w-24 h-24 bg-transparent border border-blue-500 absolute bottom-0 right-0 z-10 "></div>
-                  <div className="z-20 relative bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-6  border border-blue-500 h-[200px] hover:scale-105 duration-500 cursor-pointer">
-                    <div className="flex flex-col items-start mb-4">
-                      <div className="flex justify-center items-center border-b border-red-300 my-auto mb-2 gap-2">
-                        <FaUser className="text-lg rounded-full" />
-                        <p className="text-lg font-semibold font-rubik">
-                          {testimonial.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-300 mb-2 font-jet">
-                          {testimonial.message}
-                        </p>
+    <FramerMotion>
+      <section className=" text-white w-full">
+        <div className="mx-auto w-full md:w-[80%] mt-5">
+          <div className=" mx-auto p-5 border-2 border-slate-700">
+            <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center font-teko">
+              Testimonials
+            </h1>
+            <div className="bg-gray-900 p-5 rounded-xl overflow-hidden relative">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-transform duration-1000 ease-in-out">
+                {displayedTestimonials.map((testimonial) => (
+                  <div key={testimonial.id} className="p-6 relative">
+                    <div className="w-24 h-24 bg-transparent border border-blue-500 absolute top-0 left-0 z-10"></div>
+                    <div className="w-24 h-24 bg-transparent border border-blue-500 absolute bottom-0 right-0 z-10 "></div>
+                    <div className="z-20 relative bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-6  border border-blue-500 h-[200px] hover:scale-105 duration-500 cursor-pointer">
+                      <div className="flex flex-col items-start mb-4">
+                        <div className="flex justify-center items-center border-b border-red-300 my-auto mb-2 gap-2">
+                          <FaUser className="text-lg rounded-full" />
+                          <p className="text-lg font-semibold font-rubik">
+                            {testimonial.name}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-300 mb-2 font-jet">
+                            {testimonial.message}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </FramerMotion>
   );
 };
 
