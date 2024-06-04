@@ -80,7 +80,7 @@ const NavProfile = () => {
         </div>
         {show && (
           <div className="z-20 p-5 flex flex-col justify-between items-center w-[300px] lg:w-[200px] h-[400px] bg-transparent backdrop-blur-xl border border-slate-800 absolute top-20 lg:-right-10 right-0 ">
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col bg-transparent backdrop:blur-md">
               <div className="w-full mb-5 text-center ">
                 <h1 className="text-white font-rubik text-sm">
                   Welcome {userData ? userData.Name : "User"}
