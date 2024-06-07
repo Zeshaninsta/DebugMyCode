@@ -39,15 +39,19 @@ const HeroSection = () => {
       className="bg-[#06131a] text-white p-5 min-h-screen w-full z-20 relative"
       id="Home"
     >
-      <GridLines className="grid-area w-full" cellWidth={60} strokeWidth={0.1}>
-        {isScrolled && (
-          <div className="text-4xl text-white fixed bottom-5 right-10 border border-slate-700 rounded-full cursor-pointer p-2 z-50 hover:bg-white hover:text-black focus:border-blue-500 hover:border-none">
-            <a href="#Home" className="transition-all duration-500 ">
-              <IoIosArrowUp />
-            </a>
-          </div>
-        )}
-        <FramerMotion>
+      {isScrolled && (
+        <div className="text-4xl text-white fixed bottom-5 right-10 border border-slate-700 rounded-full cursor-pointer p-2 z-50 hover:bg-white hover:text-black focus:border-blue-500 hover:border-none">
+          <a href="#Home" className="transition-all duration-500 ">
+            <IoIosArrowUp />
+          </a>
+        </div>
+      )}
+      <FramerMotion>
+        <GridLines
+          className="grid-area w-full h-full"
+          cellWidth={60}
+          strokeWidth={0.1}
+        >
           <div className=" mx-auto flex flex-col items-center justify-center mb-10 md:h-screen bg-transparent backdrop:blur-md shadow-md border border-slate-700 rounded-lg relative p-2">
             {/* Background staring point*/}
             {/* end */}
@@ -128,16 +132,16 @@ const HeroSection = () => {
               </div>
             </div>
           </div>
-        </FramerMotion>
-        <HowItWorks />
-        <Future />
-        <FAQ />
-        <Community />
-        <Testimonials />
-        <CTA />
-        <Developers />
-        <Collaborate />
-      </GridLines>
+        </GridLines>
+      </FramerMotion>
+      <HowItWorks />
+      <Future />
+      <FAQ />
+      <Community />
+      <Testimonials />
+      <CTA />
+      <Developers />
+      <Collaborate />
     </section>
   );
 };

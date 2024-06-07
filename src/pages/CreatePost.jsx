@@ -83,6 +83,11 @@ const CreatePost = () => {
     setTags((prevTags) => [...prevTags, tag]);
   };
 
+  // Function to clear tags
+  const handleClearTags = () => {
+    setTags([]);
+  };
+
   return (
     <PageTransition>
       <div className="w-full lg:w-[60%] m-auto text-white p-5 flex flex-col">
@@ -113,23 +118,31 @@ const CreatePost = () => {
                 <BsQuestionDiamondFill />
                 Question:
               </label>
-              <input
-                type="text"
+              <textarea
                 value={editorData}
                 onChange={(e) => setEditorData(e.target.value)}
-                className="w-full outline-none border border-slate-700 focus:border-blue-400 text-sm text-white bg-transparent p-2"
+                className="w-full outline-none border border-slate-700 focus:border-blue-400 text-sm text-white bg-transparent p-2 h-[200px] resize-none overflow-auto"
               />
             </div>
             <div className="w-full flex flex-col gap-2">
-              <label className="flex justify-start items-center gap-1 text-white mb-1 bg-transparent text-sm font-rubik">
+              <label className="flex justify-between items-center gap-1 text-white mb-1 bg-transparent text-sm font-rubik">
                 {" "}
-                <AiFillTags />
-                Tags:
+                <span className="flex justify-start items-center gap-1">
+                  <AiFillTags />
+                  Tags:
+                </span>
+                <button
+                  type="button"
+                  onClick={handleClearTags}
+                  className="text-red-500"
+                >
+                  Clear
+                </button>
               </label>
               <input
                 value={tags.map((tag) => `#${tag}`).join(" ")}
-                onChange={() => {}} // Readonly input for displaying tags
-                className="w-full outline-none  text-sm text-white bg-transparent p-2"
+                readOnly
+                className="w-full outline-none text-sm text-white bg-transparent p-2"
               />
               <div className="flex text-xs lg:text-sm cursor-pointer flex-wrap gap-2 mt-2">
                 {[

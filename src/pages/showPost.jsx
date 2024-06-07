@@ -121,7 +121,7 @@ const ShowPosts = () => {
             ))}
           </div>
           {currentPosts.length > 0 ? (
-            <div className="flex flex-col justify-start items-start text-white p-5 w-full">
+            <div className="flex flex-col justify-start items-start text-white py-5 px-2 w-full">
               <h2 className="text-3xl font-bold mb-8">Top Questions</h2>
               <div className="flex flex-col w-full ">
                 <p className="bg-slate-800 w-full p-2 text-white">
@@ -133,8 +133,12 @@ const ShowPosts = () => {
                   const createdAt = formatDate(post.createdAt);
 
                   return (
-                    <Link to={`/posts/${post.id}`} key={post.id}>
-                      <div className="border border-slate-700 shadow-lg cursor-pointer p-2 w-full m-2">
+                    <Link
+                      to={`/posts/${post.id}`}
+                      key={post.id}
+                      className="w-full flex flex-col justify-center items-center"
+                    >
+                      <div className="border border-slate-700 w-full shadow-lg cursor-pointer p-2 w-full m-2">
                         <div className="flex items-center mb-2 ">
                           {post.ownerProfileImage ? (
                             <img
@@ -180,7 +184,7 @@ const ShowPosts = () => {
                   return (
                     <Link to={`/posts/${post.id}`} key={post.id}>
                       <div className="border border-slate-700 shadow-lg cursor-pointer p-5 w-full m-2">
-                        <div className="flex items-center mb-2 ">
+                        <div className="flex items-center mb-2  ">
                           {post.ownerProfileImage ? (
                             <img
                               src={post.ownerProfileImage}
