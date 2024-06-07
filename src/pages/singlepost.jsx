@@ -18,7 +18,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import PageTransition from "./PageTransition";
-
 const SinglePosts = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
