@@ -25,7 +25,7 @@ Follow these instructions to clone the code, install the necessary packages, and
 2. Clone the repository using the following command:
 
    ```bash
-   git clone https://github.com/your-github-repo
+   git clone https://github.com/zeshaninsta/debugmycode
    ```
 
 3. Navigate to the project directory:
@@ -50,7 +50,7 @@ Follow these instructions to clone the code, install the necessary packages, and
    npm run dev
    ```
 
-2. Open your browser and go to `http://localhost:3000` to view the project.
+2. Open your browser and go to `http://localhost:5173` to view the project.
 
 ## Usage
 
@@ -63,13 +63,13 @@ We hope DebugMyCode serves as a valuable resource for the developer community. H
 
 ## Links
 
-- **GitHub Repository:** [DebugMyCode GitHub](https://github.com/your-github-repo)
-- **Deployed Project:** [DebugMyCode Live](https://your-deployed-project-link)
-- **Project Landing Page:** [DebugMyCode](https://your-project-landing-page-link)
+- **GitHub Repository:** [DebugMyCode GitHub](https://github.com/zeshaninsta/debugmycode)
+- **Deployed Project:** [DebugMyCode Live](https://debugmycode.onrender.com)
+- **Project Landing Page:** [DebugMyCode](https://debugmycode.onrender.com)
 
 ## Contact
 
 For any inquiries, feel free to reach out to us via our LinkedIn profiles:
 
-- [Emran Mohammed](https://www.linkedin.com/in/emranmohammed)
-- [Bethlehem Getachew](https://www.linkedin.com/in/bethlehemgetachew)
+- [Emran Mohammed](https://www.linkedin.com/in/zeshaninsta)
+- [Bethlehem Getachew](https://www.linkedin.com/in/bethlehem-getachew-52b85827b/)
